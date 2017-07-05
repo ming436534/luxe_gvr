@@ -153,10 +153,11 @@ class LuxeGvr {
 			var leftEyeMatrix = mat4fToMatrix(leftEye).multiply(head.matrix);
 			var rightEyeMatrix = mat4fToMatrix(rightEye).multiply(head.matrix);
 		
+			cameras[0].pos.set_xyz(leftEye.m[0][3], 0, 0).applyProjection(leftEyeMatrix);
 			cameras[0].rotation.setFromRotationMatrix(leftEyeMatrix.inverse());
-			cameras[0].pos.set_xyz(0, 0, 0).applyProjection(leftEyeMatrix);
+
+			cameras[1].pos.set_xyz(rightEye.m[0][3], 0, 0).applyProjection(rightEyeMatrix);
 			cameras[1].rotation.setFromRotationMatrix(rightEyeMatrix.inverse());
-			cameras[1].pos.set_xyz(0, 0, 0).applyProjection(rightEyeMatrix);
 			
 			cameras[0].view.projection_matrix = perspective(Gvr.bufferViewportGetSourceFov(leftEyeViewport), 0.1, 100);
 			cameras[0].view.proj_arr = cameras[0].view.projection_matrix.float32array();
